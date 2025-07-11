@@ -84,6 +84,7 @@ const Signup = () => {
         <CardDescription>
           Create a new account if you haven&rsquo;t already
         </CardDescription>
+        {/* SignUp Error */}
         {error && <Error message={error.message} />}
       </CardHeader>
       <CardContent className="space-y-4">
@@ -94,6 +95,7 @@ const Signup = () => {
             placeholder="Enter Name"
             onChange={handelInputChange}
           />
+          {/* Validation Error with Yup */}
           {errors.name && <Error message={errors.name} />}
         </div>
         <div className="space-y-1">
@@ -103,6 +105,7 @@ const Signup = () => {
             placeholder="Enter Email"
             onChange={handelInputChange}
           />
+          {/* Validation Error with Yup */}
           {errors.email && <Error message={errors.email} />}
         </div>
         <div className="space-y-1">
@@ -112,6 +115,7 @@ const Signup = () => {
             placeholder="Enter Password"
             onChange={handelInputChange}
           />
+          {/* Validation Error with Yup */}
           {errors.password && <Error message={errors.password} />}
         </div>
         <div className="space-y-1">
@@ -121,6 +125,7 @@ const Signup = () => {
             accept="image/*"
             onChange={handelInputChange}
           />
+          {/* Validation Error with Yup */}
           {errors.profilepic && <Error message={errors.profilepic} />}
         </div>
       </CardContent>
