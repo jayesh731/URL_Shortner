@@ -34,7 +34,7 @@ export async function signup({ name, email, password, profilepic }) {
     options: {
       data: {
         name,
-        [profilepic]: `${supabaseUrl}/storage/v1/object/public/profilepic/${fileName}`,
+        profilepic: `${supabaseUrl}/storage/v1/object/public/profilepic/${fileName}`,
       },
     },
   });
@@ -42,4 +42,9 @@ export async function signup({ name, email, password, profilepic }) {
   if (error) throw new Error(error.message);
 
   return data;
+}
+
+export async function logout() {
+  const { error } = await supabase.auth.signOut();
+  if (error) throw new Error(error.message);
 }

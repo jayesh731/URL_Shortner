@@ -12,41 +12,68 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import { LinkIcon, LogOut } from "lucide-react";
 import { UrlState } from "@/context/Context";
+import useFetch from "@/hooks/useFetch";
+import { BarLoader } from "react-spinners";
+import { logout } from "@/db/apiAuth";
 
 const Header = () => {
   const navigate = useNavigate();
-  const {isAuthenticated} = UrlState();
+  const { user, fetchUser } = UrlState();
+
+  const { loading, fn: fnLogout } = useFetch(logout);
 
   return (
-    <nav className="py-4 flex justify-between items-center">
-      <Link to="/">
-        <img src="./logo.png" alt="logo" className="h-16" />
-      </Link>
-      {!isAuthenticated ? (
-        <Button onClick={() => navigate("/auth")} className="bg-white text-black">Login</Button>
-      ) : (
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
-            </Avatar>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="p-2 space-y-2">
-            <DropdownMenuLabel>Jayesh Bhalala</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem className="hover:bg-[#7e8a9c] ">
-              <LinkIcon />
-              <span>My Links</span>
-            </DropdownMenuItem>
-            <DropdownMenuItem className="bg-red-500 text-white rounded hover:bg-gradient-to-r from-red-500 to-red-700 transition duration-300">
-              <LogOut className="h-4 w-4" />
-              <span>Logout</span>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      )}
-    </nav>
+    <>
+      <nav className="py-4 flex justify-between items-center">
+        <Link to="/">
+          <img src="./logo.png" alt="logo" className="h-16" />
+        </Link>
+        <div className="flex gap-4">
+          {!user ? (
+            <Button
+              onClick={() => navigate("/auth")}
+              className="bg-white text-black"
+            >
+              Login
+            </Button>
+          ) : (
+            <DropdownMenu>
+              <DropdownMenuTrigger className="w-auto rounded-full overflow-hidden">
+                <Avatar>
+                  <AvatarImage src={user?.user_metadata?.profilepic} />
+                  <AvatarFallback>PA</AvatarFallback>
+                </Avatar>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent>
+                <DropdownMenuLabel className="text-center">
+                  {user?.user_metadata?.name}
+                </DropdownMenuLabel>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem>
+                  <Link to="/dashboard" className="flex">
+                    <LinkIcon className="mr-2 h-4 w-4" />
+                    My Links
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem
+                  onClick={() => {
+                    fnLogout().then(() => {
+                      fetchUser();
+                      navigate("/");
+                    });
+                  }}
+                  className="text-red-400"
+                >
+                  <LogOut className="h-4 w-4" />
+                  <span>Logout</span>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+          )}
+        </div>
+      </nav>
+      {loading && <BarLoader className="mb-4" width={"100%"} color="#36d7b7" />}
+    </>
   );
 };
 
