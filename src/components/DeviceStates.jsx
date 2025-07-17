@@ -30,7 +30,7 @@ export default function DeviceStats({ stats }) {
             {result.map((_, index) => (
               <Cell
                 key={`cell-${index}`}
-                fill={COLORS[index % COLORS.length]}
+                fill={COLORS[index % COLORS.length]}  
               />
             ))}
           </Pie>

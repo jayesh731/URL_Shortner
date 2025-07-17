@@ -5,27 +5,29 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UrlState } from "@/context/Context";
 import { getClicksforUrl } from "@/db/apiClick";
 import { deleteUrl, getUrl } from "@/db/apiUrls";
+import downloadImage from "@/hooks/useDownload";
 import useFetch from "@/hooks/useFetch";
 import { Copy, Download, LinkIcon, Trash } from "lucide-react";
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { BarLoader, BeatLoader } from "react-spinners";
 
+
 const LinkPage = () => {
-  const downloadImage = () => {
-    const imageUrl = url?.qr;
-    const fileName = url?.title;
+  // const downloadImage = () => {
+  //   const imageUrl = url?.qr;
+  //   const fileName = url?.title;
 
-    const anchor = document.createElement("a");
-    anchor.href = imageUrl;
-    anchor.download = fileName;
+  //   const anchor = document.createElement("a");
+  //   anchor.href = imageUrl;
+  //   anchor.download = fileName;
 
-    document.body.appendChild(anchor);
+  //   document.body.appendChild(anchor);
 
-    anchor.click();
+  //   anchor.click();
 
-    document.body.removeChild(anchor);
-  };
+  //   document.body.removeChild(anchor);
+  // };
 
   const { id } = useParams();
   const { user } = UrlState();
@@ -102,7 +104,7 @@ const LinkPage = () => {
             >
               <Copy />
             </Button>
-            <Button variant="Ghost" onClick={downloadImage}>
+            <Button variant="Ghost" onClick={() => downloadImage(url)}>
               <Download />
             </Button>
             <Button
