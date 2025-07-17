@@ -44,25 +44,25 @@ const Header = () => {
                   <AvatarFallback>PA</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
+              <DropdownMenuContent className="bg-[#010B1F] p-2">
                 <DropdownMenuLabel className="text-center">
                   {user?.user_metadata?.name}
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem className="hover:bg-[#3f5480]" >
                   <Link to="/dashboard" className="flex">
                     <LinkIcon className="mr-2 h-4 w-4" />
                     My Links
                   </Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem
+                <DropdownMenuItem 
                   onClick={() => {
                     fnLogout().then(() => {
                       fetchUser();
                       navigate("/");
                     });
                   }}
-                  className="text-red-400"
+                  className="text-red-400 hover:bg-[#3f5480]"
                 >
                   <LogOut className="h-4 w-4" />
                   <span>Logout</span>
